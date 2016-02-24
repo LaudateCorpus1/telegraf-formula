@@ -1,4 +1,5 @@
 telegraf:
+  version: 0.10.4-1
   database: telegraf
   urls:
     - http://localhost:8086

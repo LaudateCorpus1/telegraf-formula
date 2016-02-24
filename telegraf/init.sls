@@ -1,9 +1,11 @@
+{% from "telegraf/conf/map.jinja" import telegraf_settings with context %}
+
 {% if grains.kernel == 'Linux' %}
 
 install-telegraf:
   pkg.installed:
     - sources:
-        - telegraf: http://get.influxdb.org/telegraf/telegraf_0.10.3-1_amd64.deb
+        - telegraf: http://get.influxdb.org/telegraf/telegraf_{{ telegraf_settings.version }}_amd64.deb
 
 {% endif %}
 
@@ -43,7 +45,7 @@ telegraf-plist:
 telegraf:
   archive.extracted:
     - name: C:\telegraf\
-    - source: http://get.influxdb.org/telegraf/telegraf-0.10.4-1_windows_amd64.zip
+    - source: http://get.influxdb.org/telegraf/telegraf-{{ telegraf_settings.version }}_windows_amd64.zip
     - archive_format: zip
     - if_missing: "{{ telegraf_bin }}"
     - source_hash: md5=ad9daa8f6c75714851bd5a67627a0d9d
