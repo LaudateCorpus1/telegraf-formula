@@ -62,5 +62,5 @@ install-service:
       - watch:
         - archive: telegraf
       - require:
-        - nssm
+        - archive: nssm
 {% endif %}
