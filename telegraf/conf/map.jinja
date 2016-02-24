@@ -1,0 +1,12 @@
+{% import_yaml "telegraf/conf/defaults.yaml" as defaults %}
+
+{% if 'telegraf' in pillar and 'urls' in pillar.telegraf %}
+{% do defaults.telegraf.update({'urls': []}) %}
+{% endif %}
+
+{# Update settings defaults from pillar data #}
+{% set telegraf_settings = salt['pillar.get'](
+    'telegraf',
+    default=defaults.telegraf,
+    merge=True)
+%}

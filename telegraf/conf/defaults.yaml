@@ -1,0 +1,4 @@
+telegraf:
+  database: telegraf
+  urls:
+    - http://localhost:8086
