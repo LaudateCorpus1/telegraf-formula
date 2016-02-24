@@ -1,6 +1,6 @@
-===
+=========
 telegraf
-===
+=========
 
 Install and configure the telegraf service.
 
