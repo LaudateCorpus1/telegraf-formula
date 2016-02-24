@@ -33,3 +33,34 @@ telegraf-plist:
     - makedirs: True
 
 {% endif %}
+
+
+{% if grains.kernel == 'Windows' %}
+
+{% set nssm_bin = "C:/telegraf/nssm-2.24/win64/nssm.exe" %}
+{% set telegraf_bin = "C:/telegraf/telegraf.exe" %}
+
+telegraf:
+  archive.extracted:
+    - name: C:\telegraf\
+    - source: http://get.influxdb.org/telegraf/telegraf-0.10.4-1_windows_amd64.zip
+    - archive_format: zip
+    - if_missing: "{{ telegraf_bin }}"
+    - source_hash: md5=ad9daa8f6c75714851bd5a67627a0d9d
+
+nssm:
+  archive.extracted:
+    - name: C:\telegraf\
+    - source: https://nssm.cc/release/nssm-2.24.zip
+    - if_missing: "{{ nssm_bin }}"
+    - archive_format: zip
+    - source_hash: md5=b2edd0e4a7a7be9d157c0da0ef65b1bc
+
+install-service:
+    cmd.wait:
+      - name: {{ nssm_bin }} install telegraf "{{ telegraf_bin }}" -config C:\telegraf\telegraf.conf & {{ nssm_bin }} start telegraf
+      - watch:
+        - archive: telegraf
+      - require:
+        - nssm
+{% endif %}
